@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import LandingPage from "./components/LandingPage";
 import LoginPage from "./features/auth/LoginPage";
 import SignupPage from "./features/auth/SignupPage";
+import VerifyEmailPage from "./features/auth/VerifyEmailPage";
 import OrgAuthPage from "./features/org/OrgAuthPage";
 import ProfileSetupPage from "./features/user/ProfileSetupPage";
 import DashboardPage from "./features/user/DashboardPage";
@@ -22,6 +23,7 @@ type Page =
   | "login"
   | "signup"
   | "org-auth"
+  | "verify-email"
   | "profile-setup"
   | "dashboard"
   | "org-dashboard"
@@ -92,7 +94,7 @@ function App() {
 
   const handleSignupSuccess = (data: TokenResponse) => {
     setAuth({ token: data.token, user: data.user, isNewUser: true });
-    setPage("profile-setup");
+    setPage("verify-email");
   };
 
   const handleProfileComplete = (updatedUser: UserResponse) => {
@@ -147,6 +149,17 @@ function App() {
           onSignupSuccess={handleSignupSuccess}
           onLoginClick={() => setPage("login")}
           onBack={() => setPage("landing")}
+        />
+      );
+
+    case "verify-email":
+      if (!auth) return null;
+      return (
+        <VerifyEmailPage
+          email={auth.user.email}
+          onBackToSignup={() => setPage("signup")}
+          onContinue={() => setPage("profile-setup")}
+          onLoginClick={() => setPage("login")}
         />
       );
 
