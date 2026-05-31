@@ -18,6 +18,9 @@ class Settings(BaseSettings):
 
     # Redis/Celery
     REDIS_URL: str = "redis://localhost:6379/0"
+    # RabbitMQ support
+    BROKER_TYPE: str = "redis"  # options: redis, rabbitmq
+    BROKER_URL: str = "redis://localhost:6379/0"
 
     # LLM
     LLM_MODEL_NAME: str = "groq/openai/gpt-oss-120b"
